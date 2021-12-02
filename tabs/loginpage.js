@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text,View,StyleSheet, TouchableOpacity,SafeAreaView,ImageBackground} from "react-native";
 import axios from 'axios';
 import { TextInput } from "react-native-gesture-handler";
+import * as Animatable from 'react-native-animatable';
 
 
 // const Dologin=()=>
@@ -34,21 +35,22 @@ const Loginpage=({navigation})=>
   
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const userID="aaaa";
   const Dologin=()=>
   {
-   
-    axios.post("https://reqres.in/api/login", {
-      "email": username,
-      "password": password
-    })
-    .then(function (response) {
-      // console.warn('issue1');
-      navigation.navigate('home')
-    })
-    .catch(function (error) {
-      // console.warn('issue2');
-      alert('wrong credentials');
-    });
+    navigation.navigate('home',{userName:userID});
+    // axios.post("https://reqres.in/api/login", {
+    //   "email": username,
+    //   "password": password
+    // })
+    // .then(function (response) {
+    //   // console.warn('issue1');
+    //   navigation.navigate('home')
+    // })
+    // .catch(function (error) {
+    //   // console.warn('issue2');
+    //   alert('wrong credentials');
+    // });
    
   
    }
@@ -57,7 +59,7 @@ const Loginpage=({navigation})=>
     <View style={styles.container}>
         <SafeAreaView>
             
-   <View style={{height:'70%',marginTop:'15%',padding:10,textAlign:'centre',alignContent:'center'}}>
+   <View style={{height:"70%",marginTop:"25%",padding:10,textAlign:'centre',alignContent:'center'}}>
    <Text style={styles.title}>PATIENT PORTAL</Text>
    <TextInput 
    style={styles.textinput}
@@ -72,7 +74,7 @@ onChangeText={(username)=> setUserName(username)}
    placeholderTextColor='#333'
   //  secureTextEntry={true}
   //  onChange={e =>setPassword(e.target.value)}
-   onChangeText={(password=>setPassword(password))}
+   onChangeText={(password)=>setPassword(password)}
    />
    
    
@@ -86,17 +88,21 @@ onChangeText={(username)=> setUserName(username)}
     </TouchableOpacity>
     
     </View>
-    <ImageBackground style={{marginTop:30,width:180,height:180,alignSelf:"center"}} source={require('../assets/images/hearticon.png')}/>
+    <ImageBackground  style={{marginTop:30,width:180,height:180,alignSelf:"center"}} source={require('../assets/images/hearticon.png')}/>
     </View>
     </SafeAreaView>
-    <View style={{height:'22%',backgroundColor:'#D08AF5',width:'100%',borderTopLeftRadius:30,borderTopRightRadius:30,alignContent:'center',textAlign:'center'}}>
+    <Animatable.View 
+        animation="fadeInUpBig"    
+    style={{height:"30%",backgroundColor:'#D08AF5',width:'100%',borderTopLeftRadius:30,borderTopRightRadius:30,alignContent:'center',textAlign:'center'}}>
         <Text style={{paddingTop:10,fontSize:30,fontWeight:"bold",textAlign:'center'}}>
-            Welcome
+            Welcome!
         </Text>
-        <TouchableOpacity style={{width:200,marginTop:30,backgroundColor:'#D0D5D3',outline:'none',borderRadius:30,borderWidth:1,alignContent:'center',marginLeft:'24%'}}>
+        <TouchableOpacity
+        onPress={()=>{navigation.navigate('signup')}}
+        style={{width:200,marginTop:30,backgroundColor:'#D0D5D3',outline:'none',borderRadius:30,borderWidth:1,alignContent:'center',marginLeft:'24%'}}>
     <Text style={{fontSize:15,fontWeight:"bold",padding:10,textAlign:'center'}}>SIGN UP</Text>
     </TouchableOpacity>
-        </View>
+        </Animatable.View>
  
   </View>
     )

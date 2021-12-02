@@ -1,6 +1,7 @@
-import React from "react";
-import {Text,View,FlatList} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React,{useEffect,useState} from "react";
+import {Text,View,FlatList,StyleSheet, Alert} from "react-native";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
 import {
     Container,
     Card,
@@ -13,67 +14,76 @@ import {
     MessageText,
     TextSection,
   } from '../tabs/stylesMessage';
-  
-  const Messages = [
-    {
-      id: '1',
-      userName: 'Jenny Doe',
-  
-      messageTime: '4 mins ago',
-      messageText:
-        'Hey, get appointment today.',
-    },
-    {
-      id: '2',
-      userName: 'John Doe',
-   
-      messageTime: '2 hours ago',
-      messageText:
-        'Hey did you check out your reports ?',
-    },
-    {
-      id: '3',
-      userName: 'Ken William',
 
-      messageTime: '1 hours ago',
-      messageText:
-        'Hey.',
-    },
-    {
-      id: '4',
-      userName: 'Selina Paul',
-   
-      messageTime: '1 day ago',
-      messageText:
-        'Hey, did you get vaccinated?.',
-    },
-    {
-      id: '5',
-      userName: 'Christy Alex',
-   
-      messageTime: '2 days ago',
-      messageText:
-        'Hey, did you get flu shot?.',
-    },
-  ];
-
-const Allmessages=({navigation})=>
+  
+const Allmessages=({navigation,route})=>
 {
-    
-    return(
+ 
+  const userId=route.params.userName;
+  const[messages,setmessages]=useState([]);
+   const[receive,setreceive]=useState('');
+
+ useEffect(()=>{
+ axios.get("https://cs673-group8.herokuapp.com/allConversations/"+userId
+  )
+  .then(function (response) {
+   const data=response.data.conversations;
+ setmessages(data);
+  })
+  .catch(function (error) {
+    alert(error);
+  });},[])
+
+////new user call
+  const newUser=()=>{
+    if(receive!='')
+    axios.post("https://cs673-group8.herokuapp.com/message/"+userId+"/"+receive+"/"+"Hi i am "+userId)
+    .then(function (response) {
+    alert("request sent to "+receive);
+   
+   
+    })
+    .catch(function (error) {
+      // console.warn('issue2');
+      alert(error);
+    });
+  
+  
+  }
+
+
+
+
+   return(
         <Container>
-        <FlatList 
-          data={Messages}
+     <View style={{flexDirection:"row",marginTop:10}}>
+          <View style={styles.textinput}>
+            <TextInput style={{marginTop:6,fontSize:16}}
+            placeholder='Enter the User Name'
+            placeholderTextColor='black'
+            onChangeText={(newreciever)=>setreceive(newreciever)}
+             />
+             </View>
+             <View style={{paddingHorizontal:10}}>
+          
+             <TouchableOpacity 
+             onPress={newUser}
+             style={{width:60,height:50,backgroundColor:'#2e64e5',marginLeft:4,outline:'none',borderRadius:20,borderWidth:1}}>
+               <Text style={{color:"#ffff",textAlign:"center",fontWeight:"bold",paddingTop:10}}>PUSH</Text>
+              
+             </TouchableOpacity>
+            </View>
+           </View>
+        <FlatList
+          data={messages}
           keyExtractor={item=>item.id}
           renderItem={({item}) => (
-            <Card onPress={() => navigation.navigate('chat')}>
+            <Card onPress={() => navigation.navigate('chat', {sendtoName: item.id,userName:userId})}>
               <UserInfo>
                 <TextSection>
                   <UserInfoText>
-                    <UserName>{item.userName}</UserName>
-                    <PostTime>{item.messageTime}</PostTime>
+                    <UserName>{item.id}</UserName>                
                   </UserInfoText>
-                  <MessageText>{item.messageText}</MessageText>
                 </TextSection>
               </UserInfo>
             </Card>
@@ -81,8 +91,19 @@ const Allmessages=({navigation})=>
         />
       </Container>
 
+
         
     )
 }
 
+
+
+const styles=StyleSheet.create({
+  textinput:
+  {borderRadius:20,
+    backgroundColor:'#D0D5D3',
+    paddingHorizontal:"20%",
+    height:50
+  }
+});
 export default Allmessages;

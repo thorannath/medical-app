@@ -31,7 +31,7 @@ export const UserImg = styled.Image`
 export const TextSection = styled.View`
   flex-direction: column;
   justify-content: center;
-  padding: 15px;
+  padding: 20px;
   padding-left: 0;
   margin-left: 5px;
   width: 350px;
@@ -46,7 +46,7 @@ export const UserInfoText = styled.View`
 `;
 
 export const UserName = styled.Text`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
  
 `;

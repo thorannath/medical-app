@@ -7,7 +7,9 @@ import Message from "./message";
 import Myprofile from "./myprofile";
 import { FontAwesome5 } from '@expo/vector-icons'
 const tab = createBottomTabNavigator();
-const HomePage=()=>{
+const HomePage=({route})=>{
+  // console.log(route.params.userName);
+  const user=route.params.userName;
     return(
 
         <tab.Navigator screenOptions={{
@@ -46,12 +48,15 @@ const HomePage=()=>{
               )
             }}/>
             <tab.Screen name='message' component={Message}
+            initialParams={{userName: user}}
               options={{ tabBarIcon: ({ focused }) => (
                 <View style={{
                   // centring Tab Button...
                   position: 'absolute',
                   top: 15
+                
                 }}>
+                  {/* <Image source={require('../assets/images/notification.png')}/> */}
                   <FontAwesome5
                     name="comment-medical"
                     size={25}

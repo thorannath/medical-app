@@ -5,12 +5,20 @@ import {Text,View} from "react-native";
 import Allmessages from "./allmessages";
 import Chat from "./chat";
 const Stack = createNativeStackNavigator();
-const Message=()=>
+const Message=({route})=>
 {
+  const user=route.params.userName
     return(
-        <Stack.Navigator screenOptions={{headerShown:false}} >
-        <Stack.Screen name="allmessages" component={Allmessages}/>
-        <Stack.Screen name="chat" component={Chat}/>
+        <Stack.Navigator >
+        <Stack.Screen name="allmessages" component={Allmessages}
+        options={{title:""}}
+        initialParams={{userName: user}}/>
+        <Stack.Screen name="chat" component={Chat}
+          options={({route}) => ({
+            title: route.params.sendtoName,
+            headerBackTitleVisible: false,
+          })}
+        />
       </Stack.Navigator>
     )
 }

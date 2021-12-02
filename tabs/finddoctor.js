@@ -1,14 +1,14 @@
 import React from "react";
-import {Text,View} from "react-native";
-
+import {Text,View,Image} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Agenda } from "react-native-calendars";
 const FindDoc=()=>
 {
     return(
-        <View style={{marginTop:2,padding:20,alignContent:'center',backgroundColor:'#D08AF5'}}>
-            <Text style={{alignSelf:'center'}}>
-         Scheduled Appointment 
-            </Text>
-        </View>
+  
+        <Agenda />
+
+       
     )
 }
 
