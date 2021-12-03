@@ -11,7 +11,7 @@ const Message=({route})=>
     return(
         <Stack.Navigator >
         <Stack.Screen name="allmessages" component={Allmessages}
-        options={{title:""}}
+        options={{headerShown:false}}
         initialParams={{userName: user}}/>
         <Stack.Screen name="chat" component={Chat}
           options={({route}) => ({

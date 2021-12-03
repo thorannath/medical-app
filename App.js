@@ -18,7 +18,7 @@ export default function App() {
         <Stack.Screen name="signup" component={SignUp}  options={{headerTitle:' '}}/>
       </Stack.Navigator>
    </NavigationContainer>
-    // <Loginpage/>rr
+   
 
   );
 }

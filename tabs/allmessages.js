@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from "react";
 import {Text,View,FlatList,StyleSheet, Alert} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import {
     Container,
@@ -13,6 +14,7 @@ import {
     PostTime,
     MessageText,
     TextSection,
+   
   } from '../tabs/stylesMessage';
 
   
@@ -55,8 +57,15 @@ const Allmessages=({navigation,route})=>
 
 
    return(
-        <Container>
-     <View style={{flexDirection:"row",marginTop:10}}>
+ 
+               <Container>
+                 <LinearGradient
+                colors={['#1f4037','#99f2c8']}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 1 }}
+                style={{padding:20,borderBottomLeftRadius:60}}
+                 >
+     <View style={{flexDirection:"row",marginTop:1,padding:20,borderBottomLeftRadius:60}}>
           <View style={styles.textinput}>
             <TextInput style={{marginTop:6,fontSize:16}}
             placeholder='Enter the User Name'
@@ -65,15 +74,16 @@ const Allmessages=({navigation,route})=>
              />
              </View>
              <View style={{paddingHorizontal:10}}>
-          
              <TouchableOpacity 
              onPress={newUser}
-             style={{width:60,height:50,backgroundColor:'#2e64e5',marginLeft:4,outline:'none',borderRadius:20,borderWidth:1}}>
-               <Text style={{color:"#ffff",textAlign:"center",fontWeight:"bold",paddingTop:10}}>PUSH</Text>
+             style={{width:60,height:50,backgroundColor:'#000',marginLeft:4,outline:'none',borderRadius:20,borderWidth:1}}>
+             
+               <Text style={{color:"#FFF",textAlign:"center",fontWeight:"bold",paddingTop:10}}>PUSH</Text>
+              </TouchableOpacity>
               
-             </TouchableOpacity>
             </View>
            </View>
+           </LinearGradient>
         <FlatList
           data={messages}
           keyExtractor={item=>item.id}

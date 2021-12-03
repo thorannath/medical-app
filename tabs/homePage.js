@@ -6,6 +6,7 @@ import FindDoc from "./finddoctor";
 import Message from "./message";
 import Myprofile from "./myprofile";
 import { FontAwesome5 } from '@expo/vector-icons'
+import { LinearGradient } from "expo-linear-gradient";
 const tab = createBottomTabNavigator();
 const HomePage=({route})=>{
   // console.log(route.params.userName);
@@ -66,6 +67,7 @@ const HomePage=({route})=>{
               )
             }}/>
             </tab.Navigator>
+          
         // <View>
         //     <Text>HELLO</Text>
         // </View>

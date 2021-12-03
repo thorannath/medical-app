@@ -5,7 +5,7 @@ export const Container = styled.View`
   padding-left: 5px;
   padding-right: 5px;
   align-items: center;
-  background-color: #ffffff;
+  
 `;
 
 export const Card = styled.TouchableOpacity`
@@ -36,7 +36,7 @@ export const TextSection = styled.View`
   margin-left: 5px;
   width: 350px;
   border-bottom-width: 1px;
-  border-bottom-color: #cccccc;
+  border-bottom-color: #000;
 `;
 
 export const UserInfoText = styled.View`
