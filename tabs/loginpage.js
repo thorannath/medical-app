@@ -36,7 +36,7 @@ const Loginpage=({navigation})=>
   const isFocused = useIsFocused()
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const userID="aaaa";
+  const userID="bbbb";
   const Dologin=()=>
   {
     navigation.navigate('home',{userName:userID});

@@ -15,8 +15,13 @@ const HomePage=({route})=>{
 
         <tab.Navigator screenOptions={{
             tabBarShowLabel: false,
-            headerShown:false
-          }}>
+            headerShown:false,
+            tabBarStyle:[
+            {  backgroundColor: '#000',
+              }
+        ]
+          }}
+          >
             <tab.Screen name='myprofile' component={Myprofile} 
             options={{ tabBarIcon: ({ focused }) => (
                 <View style={{
@@ -27,7 +32,7 @@ const HomePage=({route})=>{
                   <FontAwesome5
                     name="user"
                     size={25}
-                    color={focused ? 'red' : 'gray'}
+                    color={focused ? '#99f2c8' : '#1f4037'}
                   ></FontAwesome5>
                 </View>
               )
@@ -43,7 +48,7 @@ const HomePage=({route})=>{
                   <FontAwesome5
                     name="calendar"
                     size={25}
-                    color={focused ? 'red' : 'gray'}
+                    color={focused ? '#99f2c8' : '#1f4037'}
                   ></FontAwesome5>
                 </View>
               )
@@ -61,7 +66,7 @@ const HomePage=({route})=>{
                   <FontAwesome5
                     name="comment-medical"
                     size={25}
-                    color={focused ? 'red' : 'gray'}
+                    color={focused ? '#99f2c8' : '#1f4037'}
                   ></FontAwesome5>
                 </View>
               )

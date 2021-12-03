@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,componentDidMount,componentWillUnMount} from "react";
 import {Text,View,FlatList,StyleSheet, Alert} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,6 +16,7 @@ import {
     TextSection,
    
   } from '../tabs/stylesMessage';
+import { useFocusEffect } from "@react-navigation/native";
 
   
 const Allmessages=({navigation,route})=>
@@ -23,18 +24,27 @@ const Allmessages=({navigation,route})=>
  
   const userId=route.params.userName;
   const[messages,setmessages]=useState([]);
-   const[receive,setreceive]=useState('');
+  const[receive,setreceive]=useState('');
 
- useEffect(()=>{
- axios.get("https://cs673-group8.herokuapp.com/allConversations/"+userId
+const apiCall=()=>{
+  axios.get("https://cs673-group8.herokuapp.com/allConversations/"+userId
   )
   .then(function (response) {
-   const data=response.data.conversations;
+    const data=response.data.conversations;
  setmessages(data);
   })
   .catch(function (error) {
     alert(error);
-  });},[])
+  });
+}
+
+useEffect(()=>{
+  apiCall();
+  const start=setInterval(()=>{apiCall()},10000);
+  return ()=>{console.log("end of all messages");clearInterval(start)}
+},[])
+    
+
 
 ////new user call
   const newUser=()=>{

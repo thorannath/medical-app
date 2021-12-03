@@ -13,28 +13,33 @@ const senderId=route.params.userName;
 // console.log(route.params.sendtoName);
 // console.log(route.params.userName);
 const receiverId=route.params.sendtoName;
-  useEffect(() => {
+ const chatUpdate=()=>{
+ axios.get("https://cs673-group8.herokuapp.com/messages/"+senderId+"/"+receiverId)
+ .then(function(response){
+ 
+   const mesg=response.data.messages;
 
-    axios.get("https://cs673-group8.herokuapp.com/messages/"+senderId+"/"+receiverId)
-    .then(function(response){
-     
-       const mesg=response.data.messages;
-    
-      var id=0;
-  for(var data of mesg){
-     data._id = id+1;
-     id++;
-     data.user._id=data.sender;
-  };
-  //  console.log(mesg);
-   var reverser = mesg.reverse(); 
-  //  console.log(a);
-    setMessages(reverser);
-    
-    }).catch(function(error){
-    
-      alert(error);
-    }); 
+  var id=0;
+ for(var data of mesg){
+ data._id = id+1;
+ id++;
+ data.user._id=data.sender;
+ };
+ //  console.log(mesg);
+ var reverser = mesg.reverse(); 
+ //  console.log(a);
+ setMessages(reverser);
+
+ }).catch(function(error){
+
+  alert(error);
+ }); 
+ }
+
+  useEffect(() => {
+    chatUpdate();
+    const start=setInterval(()=>{chatUpdate()},10000);
+  return ()=>{console.log("end of chat");clearInterval(start)}
   }, []);
 
   
@@ -73,8 +78,8 @@ const receiverId=route.params.sendtoName;
           <MaterialCommunityIcons
             name="send-circle"
             style={{marginBottom: 5, marginRight: 5}}
-            size={32}
-            color="#2e64e5"
+            size={34}
+            color="#000"
           />
         </View>
       </Send>
@@ -87,12 +92,16 @@ const receiverId=route.params.sendtoName;
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: '#2e64e5',
+            backgroundColor: '#000',
           },
+          left:{
+            backgroundColor: '#c8ee90',
+          }
+        
         }}
         textStyle={{
           right: {
-            color: '#fff',
+            color: '#99f2c8',
           },
          
           
