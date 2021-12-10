@@ -23,6 +23,7 @@ const HomePage=({route})=>{
           }}
           >
             <tab.Screen name='myprofile' component={Myprofile} 
+             initialParams={{userName: user}}
             options={{ tabBarIcon: ({ focused }) => (
                 <View style={{
                   // centring Tab Button...

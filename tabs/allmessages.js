@@ -96,9 +96,9 @@ useEffect(()=>{
            </LinearGradient>
         <FlatList
           data={messages}
-          keyExtractor={item=>item.id}
+          keyExtractor={item=>item.id.toString()}
           renderItem={({item}) => (
-            <Card onPress={() => navigation.navigate('chat', {sendtoName: item.id,userName:userId})}>
+            <Card onPress={() => navigation.navigate('chat', {sendtoName: item.id.toString(),userName:userId})}>
               <UserInfo>
                 <TextSection>
                   <UserInfoText>

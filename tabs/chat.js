@@ -9,6 +9,9 @@ const Chat= ({route}) => {
   const [messages, setMessages] = useState([]);
   const mesg=[];
 const senderId=route.params.userName;
+
+// console.log(senderId);
+
 // const receiverId= route.params.userName;
 // console.log(route.params.sendtoName);
 // console.log(route.params.userName);
@@ -23,9 +26,9 @@ const receiverId=route.params.sendtoName;
  for(var data of mesg){
  data._id = id+1;
  id++;
- data.user._id=data.sender;
+ data.user._id=""+data.sender;
  };
- //  console.log(mesg);
+  // console.log(mesg);
  var reverser = mesg.reverse(); 
  //  console.log(a);
  setMessages(reverser);

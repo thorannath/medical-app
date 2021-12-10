@@ -1,77 +1,113 @@
-import React  from "react";
+import React, { useEffect, useState }  from "react";
 import {Text,View,StyleSheet,SafeAreaView,ImageBackground} from "react-native";
 import { Component } from "react";
+import axios from "axios";
 
 
-const Myprofile=()=>
+const Myprofile=({route})=>
 {
-const pro='hello'
- const profile=
+  const userId=route.params.userName;
+  const [name,setname]=useState([]);
+  const [profile,setprofile]=useState([]); 
+  const [insurance,setins]=useState([]);
+
+
+  const apiIns=()=>{
+    axios.get("https://patient-kiosk.herokuapp.com/intake/"+userId+"/insuranceDetails"
+    )
+    .then(function (response) {
+   
+     setins(response.data.patient);
+  
+    })
+    .catch(function (error) {
+      alert(error);
+    });
+  };
+  const apiPro=()=>{
+    axios.get("https://patient-kiosk.herokuapp.com/intake/"+userId+"/personalDetails"
+    )
+    .then(function (response) {
+   
+     setprofile(response.data.patient);
+  
+    })
+    .catch(function (error) {
+      alert(error);
+    });
+  };
+  const apiName=()=>{
+    axios.get("https://patient-kiosk.herokuapp.com/patientDetails"
+    )
+    .then(function (response) {
+    
+    
+     for(var a of response.data.patients)
      {
-         name:"Stewe",
-         age:"30",
-         height:"170 cm",
-         weight:"275 lbs",
-         profimage:require('../assets/images/nurse.png')
+       
+       if(a.id==userId)
+       {
+            setname({
+                fname:a.first_name,
+                lname:a.last_name,
+
+            })
+           
+       }
      }
- 
+  
+    })
+    .catch(function (error) {
+      alert(error);
+    });
 
 
+
+  }
+
+
+
+   useEffect(()=>{
+    
+     apiName();
+     apiPro();
+    apiIns();
+     },[]);
 
 
     return(
         <SafeAreaView style={styles.container}>
           <ImageBackground  style={{width:"100%",height:"100%"}} source={require('../assets/images/dog.jpg')}>
-           <View style={{backgroundColor:"#000",marginTop:40,padding:30,marginRight:"50%",marginLeft:5,borderRadius:100}}>
-             <Text style={{color:"#FFF",fontSize:20,fontWeight:"bold",textAlign:"center"}}>HELLO! {profile.name}</Text>
+           <View style={{marginTop:40,padding:30,alignContent:"center"}}>
+             <Text style={{color:"#000",fontSize:25,fontWeight:"bold",textAlign:"center"}}>HELLO!  {name.fname}{name.lname}</Text>
 
                </View>
-               <View style={{marginTop:"50%",backgroundColor:"lightblue",borderRadius:80,marginRight:"50%"}}>
-               <Text style={{textAlign:"center",fontWeight:'bold',fontSize:15}}>
-              AGE:     {profile.age}
+             
+
+               <View style={{opacity:0.85,height:"50%",marginTop:"90%",backgroundColor:"#000",borderTopRightRadius:100,borderTopLeftRadius:100}}>
+               <Text style={{paddingTop:10,color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+               HEIGHT:  {profile.height} cm/ft
             </Text>
-            <Text style={{textAlign:"center",fontWeight:'bold',fontSize:15}}>
-              HEIGHT:  {profile.height}
+            <Text style={{color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+            WEIGHT:  {profile.weight} lbs/kg
             </Text>
-            <Text style={{textAlign:"center",fontWeight:'bold',fontSize:15}}>
-              WEIGHT:  {profile.weight}
+            <Text style={{color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+              Marital Status: {profile.marital_status}
+            </Text>
+            <Text style={{color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+              License-NO: {profile.license_no}
+            </Text>             
+               <Text style={{color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+              Insurance NO: {insurance.insurance_no}
+            </Text>
+            <Text style={{color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+              RX Bin:  {insurance.rx_bin}
+            </Text>
+            <Text style={{color:"#fff",textAlign:"center",fontWeight:'bold',fontSize:18}}>
+              RX Group:  {insurance.rx_group}
             </Text>
                </View>
 
-
-
-
-
-
-
-
-
-
-
-
-        {/* <View style={{marginTop:40,alignContent:'center',backgroundColor:'#D08AF5',paddingTop:5,paddingBottom:5,borderRadius:90}}>
-            <Image style={{height:150,width:100,alignSelf:'center'}} source={profile.profimage}/>
-            </View>
-           <View style={{marginTop:40}}>
-                <Text style={{textAlign:"center",fontWeight:'bold',fontSize:20}}>
-              NAME: {profile.name}
-            </Text>
-            <Text style={{textAlign:"center",fontWeight:'bold',fontSize:15}}>
-              AGE:     {profile.age}
-            </Text>
-            <Text style={{textAlign:"center",fontWeight:'bold',fontSize:15}}>
-              HEIGHT:  {profile.height}
-            </Text>
-            <Text style={{textAlign:"center",fontWeight:'bold',fontSize:15}}>
-              WEIGHT:  {profile.weight}
-            </Text>
-        </View> */}
-     {/* <View style={{marginTop:40,borderColor:'black',borderWidth:5,margin:10,padding:10}}>
-         <Text style={{textAlign:"center",fontSize:15,fontWeight:'bold',paddingTop:5}}>HighBloodPressure: ---- </Text>
-         <Text style={{textAlign:"center",fontSize:15,fontWeight:'bold',paddingTop:5}}>Heart ECG: ---- </Text>
-         <Text style={{textAlign:"center",fontSize:15,fontWeight:'bold',paddingTop:5}}>Echocardiogram : ---- </Text>
-         <Text style={{textAlign:"center",fontSize:15,fontWeight:'bold',paddingTop:5}}>HDL/LDL: ---- </Text>
-     </View> */}
      
     </ImageBackground>
         </SafeAreaView>
